@@ -28,14 +28,14 @@ while True:
   tempC = AM2302.temperature()   # get temperature (Celsius) from AM2302
   humidity = AM2302.humidity()   # get humidity from AM2302
 
-  JSONstring = '{"TimeUTC":"'+get_time_str()+'","TemperatureC":"'+str(tempC)+'","Humidity":"'+str(humidity)+'"}'
-  print(JSONstring)
+  JSONstring = '{"TimeUTC":"'+get_time_str()+'","TemperatureC":'+str(tempC)+',"Humidity":'+str(humidity)+'}'
+  print("PUBL " + topic.decode("utf-8") + " " + JSONstring)
 
   MQTTmsg = bytes(JSONstring, 'utf-8')
 
   try:
     client.publish(topic, MQTTmsg)
 
-  except:
-    print("Can not publish message - reconnecting")
+  except Exception as X:
+    print("Can not publish message (error " + str(X) + ") - reconnecting")
     mqtt_connect()

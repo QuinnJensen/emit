@@ -83,6 +83,7 @@ def get_time_str():
 def mqtt_connect():
   global client_id, mqtt_broker, mqtt_port   # use the global variables: client_id, mqtt_broker, mqtt_port
 
+  print('client_id ' + str(client_id) + ' topic ' + topic.decode("utf-8"))
   client = MQTTClient(client_id, mqtt_broker, mqtt_port)  # create MQTT client using our MQTT settings
 
   # initialise our local variables (used to manage the connection process)
@@ -92,7 +93,7 @@ def mqtt_connect():
 
   while (connect_attempt <= max_con_attempts) and broker_connected == 0:
 
-      print('Connecting to MQTT broker:  '+mqtt_broker+', publishing to topic: ' + topic.decode("utf-8") + 'Attempt No. :' + str(connect_attempt))
+      print('Connecting to MQTT broker:  '+mqtt_broker+', publishing to topic: ' + topic.decode("utf-8") + ', Attempt No. :' + str(connect_attempt))
 
       try:
           client.connect()   # attempt to connect to the MQTT broker
@@ -100,8 +101,8 @@ def mqtt_connect():
           print("Connection successful")   # if successful, send success message to Shell
           broker_connected = 1             # set broker connection status register to 1
 
-      except:
-          print("Connection attempt failed")   # if NOT successful, send debug message to Shell
+      except Exception as X:
+          print("Connection attempt failed: " + str(X))   # if NOT successful, send debug message to Shell
 
           if connect_attempt < max_con_attempts:      # if current connection attempt is less than max connection attempts ...
               connect_attempt = connect_attempt + 1   # increment the connection_attempt count
