@@ -84,7 +84,8 @@ def mqtt_connect():
   global client_id, mqtt_broker, mqtt_port   # use the global variables: client_id, mqtt_broker, mqtt_port
 
   print('client_id ' + str(client_id) + ' topic ' + topic.decode("utf-8"))
-  client = MQTTClient(client_id, mqtt_broker, mqtt_port)  # create MQTT client using our MQTT settings
+
+  client = MQTTClient(client_id, mqtt_broker, mqtt_port, None, None, 30)  # create MQTT client using our MQTT settings
 
   # initialise our local variables (used to manage the connection process)
   broker_connected = 0   # broker connection status register
