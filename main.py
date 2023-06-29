@@ -17,8 +17,6 @@ client = mqtt_connect()
 # this is the main program loop
 while True:
 
-  time.sleep(5)     # wait 5 seconds
-
   RedLED.value(1)   # turn RedLED ON
 
   AM2302.measure()  # start AM2302 measurement
@@ -39,3 +37,5 @@ while True:
   except Exception as X:
     print("Can not publish message (error " + str(X) + ") - reconnecting")
     mqtt_connect()
+
+  time.sleep(30)    # wait here
